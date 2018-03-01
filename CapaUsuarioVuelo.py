@@ -236,7 +236,6 @@ class CUVuelo():
               self.tree.insert("", lista[i].nro_vuelo,text=lista[i].nro_vuelo, values=(lista[i].dia_hora_salida,lista[i].dia_hora_llegada,lista[i].aerolinea,lista[i].destino,lista[i].capacidad))
 
 
-cu = CUVuelo()
-cu.interfaz()
+
 
 

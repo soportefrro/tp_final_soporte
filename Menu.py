@@ -20,13 +20,13 @@ class Menu():
 
        self.tree.grid(row=1,column=1,columnspan=3,rowspan = 7,sticky=(N, S, E, W))
 
-       botonA = Button(self.ventana, text="  Vuelos  ", command=lambda: self.vuelos(),background="#DAE4E3")
+       botonA = Button(self.ventana, text="  Vuelos  ", command=lambda: self.vuelos(),background="#b0b9e5",activebackground="#99a6e5",cursor="hand2")
        botonA.grid(row=2,column=2,sticky=(N, S, E, W))
 
-       botonB = Button(self.ventana,text="  Clientes  ", command= lambda: self.clientes(),background="#DAE4E3" )
+       botonB = Button(self.ventana,text="  Clientes  ", command= lambda: self.clientes(),background="#b0b9e5",activebackground="#99a6e5",cursor="hand2")
        botonB.grid(row=4,column=2,columnspan=1,sticky=(N, S, E, W))
 
-       botonM = Button(self.ventana,text="  Reservas  ", command=lambda: self.reservas(),background="#DAE4E3")
+       botonM = Button(self.ventana,text="  Reservas  ", command=lambda: self.reservas(),background="#b0b9e5",activebackground="#99a6e5",cursor="hand2")
        botonM.grid(row=6,column=2,sticky=(N, S, E, W))
 
        self.ventana.mainloop()

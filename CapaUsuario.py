@@ -265,7 +265,4 @@ class CUCliente():
 
 
 
-cu = CUCliente()
-cu.interfaz()
-
 

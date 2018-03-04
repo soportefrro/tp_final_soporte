@@ -12,20 +12,20 @@ class CNReserva():
         return self.cdr.mostrarReservas()
 
     def borrar_reserva(self, r):
-        if self.cdr.bajaReserva(r.vuelo_nro_vuelo, r.vuelo_dia_hora_salida, r.cliente_dni):
+        if self.cdr.bajaReserva(r.id_reserva):
             return True
         else:
             return False
 
-    def buscar(self, nro_vuelo,dia_hora_salida,dni):
-        r = self.cdr.buscarReserva(nro_vuelo,dia_hora_salida,dni)
+    def buscar(self, id):
+        r = self.cdr.buscarReserva(id)
         if r == None:
             return None
         else:
             return r
 
     def modificar(self, r):
-        self.cdr.modificar(r)
+        self.cdr.modificarReserva(r)
 
 
 

@@ -139,7 +139,7 @@ class CUVuelo():
        self.cnv.borrar(v)
 
        tl=Toplevel()
-       tl.title("Socio borrado")
+       tl.title("Vuelo borrado")
        vp=Frame(tl)
        vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
        etique=Label(vp, text="El vuelo ha sido borrado")
@@ -160,7 +160,7 @@ class CUVuelo():
 
        # ventana de confirmación
        tl=Toplevel()
-       tl.title("Socio modificado")
+       tl.title("Vuelo modificado")
        vp=Frame(tl)
        vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
        etique=Label(vp, text="El vuelo ha sido modificado")

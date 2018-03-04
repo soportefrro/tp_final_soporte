@@ -25,12 +25,15 @@ class Cliente(Base):
 
 class Reserva(Base):
     __tablename__ = 'Reserva'
-    vuelo_nro_vuelo = Column(Integer, ForeignKey('Vuelo.nro_vuelo'), primary_key=True )
-    vuelo_dia_hora_salida = Column(String,ForeignKey('Vuelo.dia_hora_salida'), primary_key=True)
-    cliente_dni = Column(String, ForeignKey("Cliente.dni"), primary_key=True)
+    id_reserva = Column(Integer, primary_key=True)
+    #dia_hora_salida_vuelo=Column(String)
+    #vuelo_nro_vuelo = Column(Integer)
+    #cliente_dni = Column(String)
+    destino = Column(String)
     fecha = Column(String)
-    cliente = relationship(Cliente)
-    vuelo = relationship(Vuelo, foreign_keys=[vuelo_nro_vuelo])
+    precio = Column(String)
+   # cliente = relationship(Cliente)
+   # vuelo = relationship(Vuelo, foreign_keys=[vuelo_nro_vuelo])
 
 
 #engine = create_engine('sqlite:///sqlalchemy_base.db', echo=True)
@@ -57,19 +60,21 @@ class CapaDatosReserva():
     def mostrarReservas(self):
         return self.session.query(Reserva).all()
 
-    def bajaReserva(self, nro_vuelo, dia_hora_salida, dni):
-        self.session.query(Reserva).filter(Reserva.cliente_dni==dni and Reserva.vuelo_dia_hora_salida==dia_hora_salida and Reserva.vuelo_nro_vuelo== nro_vuelo).delete()
+    def bajaReserva(self, id):
+        self.session.query(Reserva).filter(Reserva.id_reserva == id).delete()
         self.session.commit()
 
-    def buscarReserva(self, nro_vuelo, dia_hora_salida, dni):
-        return self.session.query(Reserva).filter(Reserva.cliente_dni==dni and Reserva.vuelo_dia_hora_salida==dia_hora_salida and Reserva.vuelo_nro_vuelo== nro_vuelo).first()
+    def buscarReserva(self, id):
+        return self.session.query(Reserva).filter(Reserva.id_reserva == id).first()
 
     def modificarReserva(self,r):
-        return self.session.query(Reserva).filter(Reserva.cliente_dni==r.cliente_dni and Reserva.vuelo_dia_hora_salida== r.dia_hora_salida and Reserva.vuelo_nro_vuelo== r.vuelo_nro_vuelo).first()
-        reserva.vuelo_dia_hora_salida = r.dia_hora_salida
-        reserva.vuelo_nro_vuelo = r.vuelo_nro_vuelo
-        reserva.cliente_dni = r.cliente_dni
+        reserva = self.session.query(Reserva).filter(Reserva.id_reserva == r.id_reserva).first()
+     #   reserva.dia_hora_salida_vuelo = r.dia_hora_salida_vuelo
+      #  reserva.vuelo_nro_vuelo = r.vuelo_nro_vuelo
+       # reserva.cliente_dni = r.cliente_dni
         reserva.fecha = r.fecha
+        reserva.destino = r.destino
+        reserva.precio = r.precio
         self.session.commit()
 
 class CapaDatosVuelo():

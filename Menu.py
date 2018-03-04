@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from CapaUsuarioVuelo import CUVuelo
 from CapaUsuario import CUCliente
+from CapaUsuarioReserva import CUReserva
 
 
 
@@ -38,6 +39,10 @@ class Menu():
    def clientes (self):
        cuc = CUCliente()
        cuc.interfaz()
+
+   def reservas (self):
+       cur = CUReserva()
+       cur.interfaz()
 
 cu = Menu()
 cu.interfaz()

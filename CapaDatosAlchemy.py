@@ -138,10 +138,10 @@ class CapaDatosCliente():
         cli.sexo= c.sexo
         self.session.commit()
 
-    def buscarxDni(self,dni):
+    def buscarxDni(self,dni): #Trae la primera persona que coincida el dni
         return self.session.query(Cliente).filter(Cliente.dni==dni).first()
 
-    def buscaDni(self,dni):
+    def buscaDni(self,dni): #Cuenta la cantidad de personas con ese dni
         return self.session.query(Cliente).count().filter(Cliente.dni == dni)
 
 

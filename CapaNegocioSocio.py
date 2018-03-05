@@ -7,11 +7,11 @@ class CNCliente():
    cd = CapaDatosCliente()
 
    def alta(self,s):
-    #   if(cd.validaCantidad()<=200 and cd.buscaDni==0):
-            cd.altaCliente(s)
-            return True
-     #  else:
-      #    return False
+    if (self.buscaxDni(s.dni)):
+        return False
+    else:
+        cd.altaCliente(s)
+        return True
 
 
    def borrar(self,s):

@@ -110,17 +110,28 @@ class CUCliente():
 
        s= Cliente(dni= c, nombre= a, apellido= b, mail= d, telefono= e, sexo=f)
        print(s)
-       print(self.cn.alta(s))
+       valid=self.cn.alta(s)
 
-       tl=Toplevel()
-       tl.title("Cliente agregado")
-       vp=Frame(tl)
-       vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
-       etique=Label(vp, text="El cliente ha sido agregado")
-       etique.grid(column=1, row=1)
-       botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
-       botoncerrar.grid(column=1, row=2)
-       self.refresh()
+       if (valid):
+           tl=Toplevel()
+           tl.title("Cliente agregado")
+           vp=Frame(tl)
+           vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
+           etique=Label(vp, text="El cliente ha sido agregado")
+           etique.grid(column=1, row=1)
+           botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
+           botoncerrar.grid(column=1, row=2)
+           self.refresh()
+       else:
+           tl=Toplevel()
+           tl.title("ERROR")
+           vp=Frame(tl)
+           vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
+           etique=Label(vp, text="El DNI ingresado ya existe. Por favor modifíquelo")
+           etique.grid(column=1, row=1)
+           botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
+           botoncerrar.grid(column=1, row=2)
+           self.refresh()
 
    def alta(self):
        tl=Toplevel()

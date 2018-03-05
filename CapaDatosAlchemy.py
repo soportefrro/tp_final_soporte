@@ -1,13 +1,13 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 
 Base = declarative_base() #--- clase padre para definir las tablas
 
 class Vuelo(Base):
-    __tablename__ = 'Vuelo' #--- indispensable.
-    nro_vuelo = Column(Integer, primary_key=True) #--- indispensable
+    __tablename__ = 'Vuelo'
+    nro_vuelo = Column(Integer, primary_key=True)
     dia_hora_salida = Column(String, primary_key=True)
     dia_hora_llegada = Column(String)
     aerolinea = Column(String)
@@ -23,6 +23,19 @@ class Cliente(Base):
     telefono = Column(String)
     sexo = Column(String)
 
+class Reserva(Base):
+    __tablename__ = 'Reserva'
+    id_reserva = Column(Integer, primary_key=True)
+    #dia_hora_salida_vuelo=Column(String)
+    #vuelo_nro_vuelo = Column(Integer)
+    #cliente_dni = Column(String)
+    destino = Column(String)
+    fecha = Column(String)
+    precio = Column(String)
+   # cliente = relationship(Cliente)
+   # vuelo = relationship(Vuelo, foreign_keys=[vuelo_nro_vuelo])
+
+
 #engine = create_engine('sqlite:///sqlalchemy_base.db', echo=True)
 #Base.metadata.bind = engine
 
@@ -30,6 +43,39 @@ class Cliente(Base):
 #DBSession = sessionmaker()
 #DBSession.bind = engine
 #session = DBSession()
+
+class CapaDatosReserva():
+    def __init__(self):
+        engine = create_engine('sqlite:///sqlalchemy_base.db', echo=True)
+        Base.metadata.bind = engine
+        Base.metadata.create_all(engine)
+        db_session = sessionmaker()
+        db_session.bind = engine
+        self.session = db_session()
+
+    def altaReserva(self, r):
+        self.session.add(r)
+        self.session.commit()
+
+    def mostrarReservas(self):
+        return self.session.query(Reserva).all()
+
+    def bajaReserva(self, id):
+        self.session.query(Reserva).filter(Reserva.id_reserva == id).delete()
+        self.session.commit()
+
+    def buscarReserva(self, id):
+        return self.session.query(Reserva).filter(Reserva.id_reserva == id).first()
+
+    def modificarReserva(self,r):
+        reserva = self.session.query(Reserva).filter(Reserva.id_reserva == r.id_reserva).first()
+     #   reserva.dia_hora_salida_vuelo = r.dia_hora_salida_vuelo
+      #  reserva.vuelo_nro_vuelo = r.vuelo_nro_vuelo
+       # reserva.cliente_dni = r.cliente_dni
+        reserva.fecha = r.fecha
+        reserva.destino = r.destino
+        reserva.precio = r.precio
+        self.session.commit()
 
 class CapaDatosVuelo():
 
@@ -57,6 +103,8 @@ class CapaDatosVuelo():
 
     def modificar(self, v):
         vuelo = self.session.query(Vuelo).filter(Vuelo.nro_vuelo==v.nro_vuelo and Vuelo.dia_hora_salida==v.dia_hora_salida).first()
+        vuelo.nro_vuelo = v.nro_vuelo
+        vuelo.dia_hora_salida=v.dia_hora_salida
         vuelo.dia_hora_llegada = v.dia_hora_llegada
         vuelo.aerolinea=v.aerolinea
         vuelo.destino=v.destino
@@ -95,10 +143,10 @@ class CapaDatosCliente():
         cli.sexo= c.sexo
         self.session.commit()
 
-    def buscarxDni(self,dni):
+    def buscarxDni(self,dni): #Trae la primera persona que coincida el dni
         return self.session.query(Cliente).filter(Cliente.dni==dni).first()
 
-    def buscaDni(self,dni):
+    def buscaDni(self,dni): #Cuenta la cantidad de personas con ese dni
         return self.session.query(Cliente).count().filter(Cliente.dni == dni)
 
 

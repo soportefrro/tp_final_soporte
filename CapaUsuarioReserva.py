@@ -140,18 +140,29 @@ class CUReserva():
        e=self.precio.get()
 
        r = Reserva(id_reserva= var1, destino= c,fecha=d,precio=e)
-       self.cnr.modificar(r)
 
-       # ventana de confirmación
-       tl=Toplevel()
-       tl.title("Reserva modificada")
-       vp=Frame(tl)
-       vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
-       etique=Label(vp, text="La reserva ha sido modificada con éxito")
-       etique.grid(column=1, row=1)
-       botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
-       botoncerrar.grid(column=1, row=2)
-       self.refresh()
+       if self.cnr.modificar(r):
+           # ventana de confirmación
+           tl=Toplevel()
+           tl.title("Reserva modificada")
+           vp=Frame(tl)
+           vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
+           etique=Label(vp, text="La reserva ha sido modificada con éxito")
+           etique.grid(column=1, row=1)
+           botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
+           botoncerrar.grid(column=1, row=2)
+           self.refresh()
+       else:
+            # ventana de error
+           tl=Toplevel()
+           tl.title("ERROR")
+           vp=Frame(tl)
+           vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
+           etique=Label(vp, text="La reserva no pudo ser modificada. Existen campos vacios o iguales a 0")
+           etique.grid(column=1, row=1)
+           botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
+           botoncerrar.grid(column=1, row=2)
+           self.refresh()
 
    def modificar(self):
        tl=Toplevel()

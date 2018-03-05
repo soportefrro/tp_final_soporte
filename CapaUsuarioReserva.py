@@ -46,13 +46,13 @@ class CUReserva():
 
        self.tree.grid(row=1,column=1,columnspan=3,rowspan = 1,sticky=(N, S, E, W))
 
-       botonA = Button(self.ventana, text=" Alta  ", command=lambda: self.alta(),background="#ADF5A9")
+       botonA = Button(self.ventana, text=" Alta  ", command=lambda: self.alta(),background="#ADF5A9",cursor="hand2")
        botonA.grid(row=5,column=1,sticky=(N, S, E, W))
 
-       botonB = Button(self.ventana,text="  Baja  ", command= lambda: self.baja(),background="#F5A9A9" )
+       botonB = Button(self.ventana,text="  Baja  ", command= lambda: self.baja(),background="#F5A9A9",cursor="hand2")
        botonB.grid(row=5,column=2,columnspan=1,sticky=(N, S, E, W))
 
-       botonM = Button(self.ventana,text="  Modificacion  ", command=lambda: self.modificar(),background="#7EB0EA")
+       botonM = Button(self.ventana,text="  Modificacion  ", command=lambda: self.modificar(),background="#7EB0EA",cursor="hand2")
        botonM.grid(row=5,column=3,sticky=(N, S, E, W))
 
        self.ventana.mainloop()

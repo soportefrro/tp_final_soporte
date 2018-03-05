@@ -146,6 +146,7 @@ class CUCliente():
        self.mail=StringVar()
        self.telefono=StringVar()
        self.sexo= StringVar()
+
        botonagrega = Button(tl, text="Agregar",command=lambda: self.confirmaAlta())
        botonagrega.grid(column=2, row=3)
 
@@ -178,7 +179,6 @@ class CUCliente():
        etiquetadni.grid(column=0, row=5)
        entradadni=Entry(vp, width= 20, textvariable= self.sexo)
        entradadni.grid(column=1, row=5)
-
 
    def modificar(self):
        tl=Toplevel()

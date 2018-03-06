@@ -25,15 +25,12 @@ class Cliente(Base):
 
 class Reserva(Base):
     __tablename__ = 'Reserva'
-    id_reserva = Column(Integer, primary_key=True)
-    #dia_hora_salida_vuelo=Column(String)
-    #vuelo_nro_vuelo = Column(Integer)
-    #cliente_dni = Column(String)
-    destino = Column(String)
-    fecha = Column(String)
-    precio = Column(Integer)
-   # cliente = relationship(Cliente)
-   # vuelo = relationship(Vuelo, foreign_keys=[vuelo_nro_vuelo])
+    vuelo_nro_vuelo = Column(Integer, primary_key=True)
+    vuelo_dia_hora_salida=Column(String, primary_key=True)
+    cliente_dni = Column(String, primary_key=True)
+    fecha_reserva = Column(String)
+    cliente = relationship(Cliente, foreign_keys=[cliente_dni])
+    vuelo = relationship(Vuelo, foreign_keys=[vuelo_nro_vuelo,vuelo_dia_hora_salida])
 
 
 #engine = create_engine('sqlite:///sqlalchemy_base.db', echo=True)

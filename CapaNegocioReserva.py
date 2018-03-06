@@ -25,8 +25,11 @@ class CNReserva():
             return r
 
     def modificar(self, r):
-        self.cdr.modificarReserva(r)
-
-
-
-
+        print("aaaaaaaaaaa",r)
+        print("aaaaaaaaaaa",r.id_reserva)
+        if r.id_reserva!='' and r.destino!='' and r.fecha!='' and r.precio!='':
+            if int(r.precio)>0:
+                self.cdr.modificarReserva(r)
+                return True
+        else:
+            return False

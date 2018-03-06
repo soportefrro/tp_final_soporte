@@ -31,7 +31,7 @@ class Reserva(Base):
     #cliente_dni = Column(String)
     destino = Column(String)
     fecha = Column(String)
-    precio = Column(String)
+    precio = Column(Integer)
    # cliente = relationship(Cliente)
    # vuelo = relationship(Vuelo, foreign_keys=[vuelo_nro_vuelo])
 

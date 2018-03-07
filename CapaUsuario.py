@@ -74,6 +74,7 @@ class CUCliente():
        f=self.sexo.get()
 
        s= Cliente(dni= indice, nombre= a, apellido= b, mail= d, telefono= e, sexo=f)
+
        retorno= self.cn.modificar(s)
 
        if retorno == False:
@@ -82,11 +83,10 @@ class CUCliente():
            tl.title("ERROR")
            vp=Frame(tl)
            vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
-           etique=Label(vp, text="Error en la modificación del cliente")
+           etique=Label(vp, text="Operación fallida. Existen campos vacíos\n")
            etique.grid(column=1, row=1)
            botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
            botoncerrar.grid(column=1, row=2)
-
        else:
            # ventana de confirmación
            tl=Toplevel()
@@ -109,10 +109,8 @@ class CUCliente():
        f=self.sexo.get()
 
        s= Cliente(dni= c, nombre= a, apellido= b, mail= d, telefono= e, sexo=f)
-       print(s)
-       valid=self.cn.alta(s)
 
-       if (valid):
+       if (self.cn.alta(s)):
            tl=Toplevel()
            tl.title("Cliente agregado")
            vp=Frame(tl)
@@ -127,11 +125,12 @@ class CUCliente():
            tl.title("ERROR")
            vp=Frame(tl)
            vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
-           etique=Label(vp, text="El DNI ingresado ya existe. Por favor modifíquelo")
+           etique=Label(vp, text="El DNI ingresado ya existe o quedaron campos vacíos\n\nPor favor modifíquelos\n")
            etique.grid(column=1, row=1)
            botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
            botoncerrar.grid(column=1, row=2)
            self.refresh()
+
 
    def alta(self):
        tl=Toplevel()
@@ -213,7 +212,7 @@ class CUCliente():
 
        etiquetanombre=Label(vp, text= "Dni: ")
        etiquetanombre.grid(column=0, row=0)
-       entradanombre=Entry(vp, width= 20, textvariable= self.dni)
+       entradanombre=Entry(vp, width= 20, textvariable= self.dni,state='disabled')
        entradanombre.grid(column=1, row=0)
 
        etiquetaapellido=Label(vp, text= "Nombre: ")

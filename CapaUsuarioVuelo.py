@@ -68,17 +68,27 @@ class CUVuelo():
        f=self.capacidad.get()
 
        vuelo = Vuelo(nro_vuelo= a, dia_hora_salida= b, dia_hora_llegada= c,aerolinea =d,destino=e,capacidad=f)
-       self.cnv.altavuelo(vuelo)
 
-       tl=Toplevel()
-       tl.title("Vuelo agregado")
-       vp=Frame(tl)
-       vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
-       etique=Label(vp, text="El vuelo ha sido agregado")
-       etique.grid(column=1, row=1)
-       botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
-       botoncerrar.grid(column=1, row=2)
-       self.refresh()
+       if self.cnv.altavuelo(vuelo):
+           tl=Toplevel()
+           tl.title("Vuelo agregado")
+           vp=Frame(tl)
+           vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
+           etique=Label(vp, text="El vuelo ha sido agregado")
+           etique.grid(column=1, row=1)
+           botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
+           botoncerrar.grid(column=1, row=2)
+           self.refresh()
+       else:
+           tl=Toplevel()
+           tl.title("ERROR")
+           vp=Frame(tl)
+           vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
+           etique=Label(vp, text="Operación fallida. Existen campos vacíos o iguales a 0\nRecuerde que la capacidad debe ser un numero\n")
+           etique.grid(column=1, row=1)
+           botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
+           botoncerrar.grid(column=1, row=2)
+           self.refresh()
 
 
 
@@ -156,19 +166,29 @@ class CUVuelo():
        f=self.capacidad.get()
 
        v = Vuelo(nro_vuelo= var1, dia_hora_salida= var2, dia_hora_llegada= c,aerolinea =d,destino=e,capacidad=f)
-       self.cnv.modificar(v)
 
-       # ventana de confirmación
-       tl=Toplevel()
-       tl.title("Vuelo modificado")
-       vp=Frame(tl)
-       vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
-       etique=Label(vp, text="El vuelo ha sido modificado")
-       etique.grid(column=1, row=1)
-       botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
-       botoncerrar.grid(column=1, row=2)
+       if self.cnv.modificar(v):
+           # ventana de confirmación
+           tl=Toplevel()
+           tl.title("Vuelo modificado")
+           vp=Frame(tl)
+           vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
+           etique=Label(vp, text="El vuelo ha sido modificado")
+           etique.grid(column=1, row=1)
+           botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
+           botoncerrar.grid(column=1, row=2)
+           self.refresh()
+       else:
+           tl=Toplevel()
+           tl.title("ERROR")
+           vp=Frame(tl)
+           vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
+           etique=Label(vp, text="Operación fallida. Existen campos vacíos o iguales a 0\nRecuerde que la capacidad debe ser un numero\n")
+           etique.grid(column=1, row=1)
+           botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
+           botoncerrar.grid(column=1, row=2)
+           self.refresh()
 
-       self.refresh()
    def modificar(self):
        tl=Toplevel()
        self.ventana.title("Formulario nuevo Vuelo")
@@ -201,12 +221,12 @@ class CUVuelo():
 
        etiquetanombre=Label(vp, text= "Nro Vuelo")
        etiquetanombre.grid(column=0, row=0)
-       entradanombre=Entry(vp, width= 20, textvariable= self.nro_vuelo)
+       entradanombre=Entry(vp, width= 20, textvariable= self.nro_vuelo,state='disabled')
        entradanombre.grid(column=1, row=0)
 
        etiquetaapellido=Label(vp, text= "Salida")
        etiquetaapellido.grid(column=0, row=1)
-       entradaapellido=Entry(vp, width= 20, textvariable= self.dia_hora_salida)
+       entradaapellido=Entry(vp, width= 20, textvariable= self.dia_hora_salida,state='disabled')
        entradaapellido.grid(column=1, row=1)
 
        etiquetadni=Label(vp, text= "Llegada")

@@ -210,7 +210,7 @@ class CUReserva():
            tl.title("ERROR")
            vp=Frame(tl)
            vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
-           etique=Label(vp, text="La reserva no pudo ser modificada. Existen campos vacios o iguales a 0")
+           etique=Label(vp, text="Operación fallida. Existen campos vacios o iguales a 0\n")
            etique.grid(column=1, row=1)
            botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
            botoncerrar.grid(column=1, row=2)

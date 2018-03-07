@@ -30,3 +30,10 @@ class CNReserva():
         else :
             return False
 
+    def reservaxcliente(self,dni):
+        return self.cdr.reservasxcliente(dni)
+
+
+    def obtenercapacidad(self, nro_vuelo, dia_hora_salida):
+        return self.cdr.obtenercapacidad(nro_vuelo, dia_hora_salida)
+

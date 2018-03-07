@@ -3,6 +3,7 @@ from tkinter import ttk
 from CapaUsuarioVuelo import CUVuelo
 from CapaUsuario import CUCliente
 from CapaUsuarioReserva import CUReserva
+from CapaUsuarioListado import CUListado
 
 
 
@@ -19,7 +20,7 @@ class Menu():
        self.ventana.resizable
        self.ventana.geometry('200x225')
 
-       self.tree.grid(row=1,column=1,columnspan=3,rowspan = 7,sticky=(N, S, E, W))
+       self.tree.grid(row=1,column=1,columnspan=3,rowspan = 9,sticky=(N, S, E, W))
 
        botonA = Button(self.ventana, text="  Vuelos  ", command=lambda: self.vuelos(),background="#b0b9e5",activebackground="#99a6e5",cursor="hand2")
        botonA.grid(row=2,column=2,sticky=(N, S, E, W))
@@ -29,6 +30,9 @@ class Menu():
 
        botonM = Button(self.ventana,text="  Reservas  ", command=lambda: self.reservas(),background="#b0b9e5",activebackground="#99a6e5",cursor="hand2")
        botonM.grid(row=6,column=2,sticky=(N, S, E, W))
+
+       botonL = Button(self.ventana,text="  Listados  ", command=lambda: self.listados(),background="#b0b9e5",activebackground="#99a6e5",cursor="hand2")
+       botonL.grid(row=8,column=2,sticky=(N, S, E, W))
 
        self.ventana.mainloop()
 
@@ -43,6 +47,10 @@ class Menu():
    def reservas (self):
        cur = CUReserva()
        cur.interfaz()
+
+   def listados(self):
+       cul = CUListado()
+       cul.interfaz()
 
 cu = Menu()
 cu.interfaz()

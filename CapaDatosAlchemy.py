@@ -80,6 +80,10 @@ class CapaDatosReserva():
         reserva.fecha_reserva = r.fecha_reserva
         self.session.commit()
 
+    def reservasxcliente(self,dni):
+        return self.session.query(Reserva).filter(Reserva.cliente_dni == dni).all()
+
+
 class CapaDatosVuelo():
 
     def __init__(self):

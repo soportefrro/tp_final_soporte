@@ -5,8 +5,11 @@ class CNVuelo():
         self.cdv=CapaDatosVuelo()
 
     def altavuelo(self, v):
-        self.cdv.altaVuelo(v)
-        return True
+        if v.nro_vuelo!='' and v.dia_hora_salida!='' and v.dia_hora_llegada!='' and v.aerolinea!='' and v.destino!='' and v.capacidad!='':
+            if int(v.capacidad)>0 and int(v.nro_vuelo):
+                self.cdv.altaVuelo(v)
+                return True
+            else: return False
 
     def todosvuelo(self):
         return self.cdv.mostrarVuelos()
@@ -25,8 +28,8 @@ class CNVuelo():
             return v
 
     def modificar(self, v):
-        self.cdv.modificar(v)
-
-
-
-
+        if v.dia_hora_llegada!='' and v.aerolinea!='' and v.destino!='' and v.capacidad!='':
+            if int(v.capacidad)>0:
+                self.cdv.modificar(v)
+                return True
+            else: return False

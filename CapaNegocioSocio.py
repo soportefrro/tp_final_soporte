@@ -10,8 +10,10 @@ class CNCliente():
     if (self.buscaxDni(s.dni)):
         return False
     else:
-        cd.altaCliente(s)
-        return True
+        if s.nombre!='' and s.apellido!='' and s.mail!='' and s.telefono!='' and s.sexo!='':
+            cd.altaCliente(s)
+            return True
+
 
 
    def borrar(self,s):
@@ -25,12 +27,11 @@ class CNCliente():
 
 
    def modificar(self,s):
-       #if(self.validaDni(s)== True and self.validaNombre(s)==True and cd.buscaDni() == 0):
-       # socioModif = cd.modificar(s)
-        #return socioModif
-        cd.modificarCliente(s)
-       #else:
-        #   return False
+       if s.dni!='' and s.nombre!='' and s.apellido!='' and s.mail!='' and s.telefono!='' and s.sexo!='':
+           cd.modificarCliente(s)
+           return True
+       else:
+           return False
 
    """def modificar2(self,s):
 

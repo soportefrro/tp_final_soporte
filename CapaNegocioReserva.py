@@ -26,7 +26,7 @@ class CNReserva():
 
     def modificar(self, r):
         if r.vuelo_nro_vuelo!='' and r.vuelo_dia_hora_salida!='' and r.cliente_dni!='' and r.fecha_reserva!='':
-                self.cdr.modificarReserva(r)
+            self.cdr.modificarReserva(r)
         else :
             return False
 

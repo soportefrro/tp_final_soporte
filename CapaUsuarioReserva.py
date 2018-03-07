@@ -53,9 +53,6 @@ class CUReserva():
        botonB = Button(self.ventana,text="  Baja  ", command= lambda: self.baja(),background="#F5A9A9",cursor="hand2")
        botonB.grid(row=5,column=2,columnspan=1,sticky=(N, S, E, W))
 
-       botonM = Button(self.ventana,text="  Modificacion  ", command=lambda: self.modificar(),background="#7EB0EA",cursor="hand2")
-       botonM.grid(row=5,column=3,sticky=(N, S, E, W))
-
        self.ventana.mainloop()
 
    def confirmaAlta(self):

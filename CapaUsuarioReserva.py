@@ -185,9 +185,9 @@ class CUReserva():
 
        botonA = Button(self.ventana2, text="Agregar", command=lambda: self.formuAlta(var1,var2),background="#ADF5A9")
        botonA.grid(row=5,column=1,sticky=(N, S, E, W))
-
-
        self.ventana.mainloop()
+
+
    def formuAlta(self,var1,var2):
        tl=Toplevel()
        self.ventana.title("Formulario nueva Reserva")
@@ -206,9 +206,6 @@ class CUReserva():
        posicion=self.tree2.selection()
        var3=self.tree2.item(posicion,"text")
 
-
-       print(var1,var2,var3)
-
        v = self.cnv.buscar(var1,var2)
        self.vuelo_nro_vuelo.set(var1)
        self.vuelo_dia_hora_salida.set(var2)
@@ -219,7 +216,7 @@ class CUReserva():
        self.cliente_nombre.set(c.nombre)
        self.cliente_apellido.set(c.apellido)
 
-       botonagrega = Button(tl, text="Agregar",command=lambda: self.formuAlta2(var1,var2,var3))
+       botonagrega = Button(tl, text="Agregar",command=lambda: self.formuAlta2())
        botonagrega.grid(column=2, row=3)
 
        etiquetanombre=Label(vp, text= "Nro Vuelo")
@@ -273,6 +270,35 @@ class CUReserva():
        botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
        botoncerrar.grid(column=1, row=2)
        self.refresh()
+
+   def formuAlta2(self):
+
+       a=self.vuelo_nro_vuelo.get()
+       b=self.vuelo_dia_hora_salida.get()
+       c=self.cliente_dni.get()
+       d=self.fecha_reserva.get()
+
+       reserva = Reserva(vuelo_nro_vuelo= a, vuelo_dia_hora_salida= b, cliente_dni= c,fecha_reserva =d)
+       if self.cnr.altareserva(reserva):
+           tl=Toplevel()
+           tl.title("Reserva agregado")
+           vp=Frame(tl)
+           vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
+           etique=Label(vp, text="La reserva ha sido agregada")
+           etique.grid(column=1, row=1)
+           botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
+           botoncerrar.grid(column=1, row=2)
+           self.refresh()
+       else:
+           tl=Toplevel()
+           tl.title("ERROR")
+           vp=Frame(tl)
+           vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
+           etique=Label(vp, text="Operación fallida")
+           etique.grid(column=1, row=1)
+           botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
+           botoncerrar.grid(column=1, row=2)
+           self.refresh()
 
    def confirmaModificar(self,var1):
 
@@ -355,7 +381,7 @@ class CUReserva():
        [self.tree.delete(c) for c in self.tree.get_children()]
        lista= self.cnr.todosreserva()
        for i in range(len(lista)):
-              self.tree.insert("", lista[i].id_reserva,text=lista[i].id_reserva, values=(lista[i].destino,lista[i].fecha,lista[i].precio))
+              self.tree.insert("", lista[i].vuelo_nro_vuelo,text=lista[i].vuelo_nro_vuelo, values=(lista[i].vuelo_dia_hora_salida,lista[i].cliente_dni,lista[i].fecha_reserva))
 
 
 

@@ -83,6 +83,9 @@ class CapaDatosReserva():
     def reservasxcliente(self,dni):
         return self.session.query(Reserva).filter(Reserva.cliente_dni == dni).all()
 
+    def obtenercapacidad(self, nro_vuelo, dia_hora_salida):
+        return self.session.query(Reserva).filter(Reserva.vuelo_nro_vuelo==nro_vuelo and Reserva.vuelo_dia_hora_salida==dia_hora_salida).count()
+
 
 class CapaDatosVuelo():
 

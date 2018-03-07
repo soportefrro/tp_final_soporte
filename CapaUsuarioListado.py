@@ -1,7 +1,6 @@
 from tkinter import *
 from tkinter import ttk
 from CapaNegocioReserva import CNReserva
-from CapaDatosAlchemy import CapaDatosReserva
 from CapaNegocioVuelo import CNVuelo
 
 class CUListado():
@@ -56,7 +55,7 @@ class CUListado():
         for i in range(len(lista)):
                self.tree2.insert("", lista[i].vuelo_nro_vuelo,text=lista[i].vuelo_nro_vuelo, values=(lista[i].vuelo_dia_hora_salida,lista[i].cliente_dni,lista[i].fecha_reserva))
 
-        self.ventana2.title("ABM Reservas")
+        self.ventana2.title("Reservas")
         self.ventana2.resizable
         self.ventana2.geometry('650x400')
         self.ventana2.columnconfigure(0,weight=0)
@@ -88,7 +87,7 @@ class CUListado():
 
    def confirmaBusqueda(self):
         #self.cn = CNCliente()
-        self.cdr = CapaDatosReserva()
+        self.cnr = CNReserva()
         a=self.dni.get()
 
         #Cliente= self.cn.buscaxDni(a)
@@ -111,11 +110,11 @@ class CUListado():
         self.tree2.heading("cliente_dni", text="DNI Cliente")
         self.tree2.heading("fecha_reserva", text="Fecha Reserva")
 
-        lista= self.cdr.reservasxcliente(a)
+        lista= self.cnr.reservaxcliente(a)
         for i in range(len(lista)):
-              self.tree2.insert("", lista[i].nro_vuelo,text=lista[i].nro_vuelo, values=(lista[i].dia_hora_salida,lista[i].dia_hora_llegada,lista[i].aerolinea,lista[i].destino,lista[i].capacidad,lista[i].precio))
+               self.tree2.insert("", lista[i].vuelo_nro_vuelo,text=lista[i].vuelo_nro_vuelo, values=(lista[i].vuelo_dia_hora_salida,lista[i].cliente_dni,lista[i].fecha_reserva))
 
-        self.ventana2.title("ABM Reservas")
+        self.ventana2.title("Listar reservas de cliente")
         self.ventana2.resizable
         self.ventana2.geometry('650x400')
         self.ventana2.columnconfigure(0,weight=0)
@@ -128,34 +127,42 @@ class CUListado():
         self.ventana2.mainloop()
 
    def mostrarcapacidad(self):
-       self.cnv = CNVuelo()
-       self.ventana2 = Tk()
-       self.tree2 = ttk.Treeview(self.ventana2)
-       vp=Frame(self.ventana2)
-       vp.grid(column=0, row=0,  sticky=(N, S, E, W))
-
-       self.tree2["columns"]=("dia_hora_salida","capacidad")
-       self.tree2.column("#0", width=50)
-       self.tree2.column("dia_hora_salida", width=150)
-       self.tree2.column("capacidad", width=100)
+        self.cnv = CNVuelo()
+        self.cnr = CNReserva()
 
 
-       self.tree2.heading("#0", text="Nro vuelo")
-       self.tree2.heading("dia_hora_salida", text="Salida")
-       self.tree2.heading("capacidad", text="Capacidad")
+        self.ventana2 = Tk()
+        self.tree2 = ttk.Treeview(self.ventana2)
+
+        vp2=Frame(self.ventana2)
+        vp2.grid(column=0, row=0,  sticky=(N, S, E, W))
+
+        self.ventana2.title("Capacidad vuelos")
+        self.tree2["columns"]=("dia_hora_salida","capacidad")
+        self.tree2.column("#0", width=50)
+        self.tree2.column("dia_hora_salida", width=100)
+        self.tree2.column("capacidad", width=100)
+
+        self.tree2.heading("#0", text="Nro Vuelo")
+        self.tree2.heading("dia_hora_salida", text="Dia hora salida")
+        self.tree2.heading("capacidad", text="Capacidad disponible")
 
 
-       lista= self.cnv.todosvuelo()
-       for i in range(len(lista)):
-              self.tree.insert("", lista[i].nro_vuelo,text=lista[i].nro_vuelo, values=(lista[i].dia_hora_salida,lista[i].capacidad))
 
-       #Configuracion de la ventana:
-       self.ventana2.title("ABM Vuelos")
-       self.ventana2.resizable
-       self.ventana2.geometry('800x400')
-       self.ventana2.columnconfigure(0,weight=0)
-       self.ventana2.columnconfigure(1,weight=1)
-       self.ventana2.rowconfigure(1,weight=1)
+        lista= self.cnv.todosvuelo()
+        for i in range(len(lista)):
+                   self.capacidad = self.cnr.obtenercapacidad(lista[i].nro_vuelo, lista[i].dia_hora_salida)
+                   self.disponible= (lista[i].capacidad - self.capacidad)
+                   self.tree2.insert("", lista[i].nro_vuelo,text=lista[i].nro_vuelo, values=(lista[i].dia_hora_salida,self.disponible))
 
-       self.tree2.grid(row=1,column=1,columnspan=3,rowspan = 1,sticky=(N, S, E, W))
-       self.ventana2.mainloop()
+        self.ventana2.title("Capacidad disponible por vuelo")
+        self.ventana2.resizable
+        self.ventana2.geometry('650x400')
+        self.ventana2.columnconfigure(0,weight=0)
+        self.ventana2.columnconfigure(1,weight=1)
+        self.ventana2.columnconfigure(2,weight=1)
+        self.ventana2.rowconfigure(1,weight=1)
+
+        self.tree2.grid(row=1,column=0,columnspan=3,rowspan = 1,sticky=(N, S, E, W))
+
+        self.ventana2.mainloop()

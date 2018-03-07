@@ -11,6 +11,7 @@ class CNReserva():
         if self.obtenercapacidad(r.vuelo_nro_vuelo,r.vuelo_dia_hora_salida) <= self.obtenercapacidavuelo(r.vuelo_nro_vuelo,r.vuelo_dia_hora_salida):
             self.cdr.altaReserva(r)
             return True
+
         else: return False
 
     def todosreserva(self):

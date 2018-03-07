@@ -55,26 +55,6 @@ class CUReserva():
 
        self.ventana.mainloop()
 
-   def confirmaAlta(self):
-       a=self.vuelo_nro_vuelo.get()
-       b=self.vuelo_dia_hora_salida.get()
-       c=self.cliente_dni.get()
-       d=self.fecha_reserva.get()
-
-
-       reserva = Reserva(vuelo_nro_vuelo= a, vuelo_dia_hora_salida= b, cliente_dni= c,fecha_reserva =d)
-       self.cnr.altareserva(reserva)
-
-       tl=Toplevel()
-       tl.title("Reserva hecha")
-       vp=Frame(tl)
-       vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
-       etique=Label(vp, text="La reserva se ha realizado con éxito")
-       etique.grid(column=1, row=1)
-       botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
-       botoncerrar.grid(column=1, row=2)
-       self.refresh()
-
    def alta(self):
        self.cnv = CNVuelo()
 
@@ -269,7 +249,7 @@ class CUReserva():
        self.refresh()
 
    def formuAlta2(self):
-
+       self.cdv=CNVuelo()
        a=self.vuelo_nro_vuelo.get()
        b=self.vuelo_dia_hora_salida.get()
        c=self.cliente_dni.get()
@@ -277,6 +257,7 @@ class CUReserva():
 
        reserva = Reserva(vuelo_nro_vuelo= a, vuelo_dia_hora_salida= b, cliente_dni= c,fecha_reserva =d)
        if self.cnr.altareserva(reserva):
+           self.cdv.actualizaCap(a,b)
            tl=Toplevel()
            tl.title("Reserva agregada")
            vp=Frame(tl)
@@ -296,6 +277,8 @@ class CUReserva():
            botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
            botoncerrar.grid(column=1, row=2)
            self.refresh()
+
+
 
 
 

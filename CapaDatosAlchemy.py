@@ -127,6 +127,10 @@ class CapaDatosVuelo():
         v = self.session.query(Vuelo).filter(Vuelo.dia_hora_salida==dia_hora_salida and Vuelo.nro_vuelo==nro_vuelo).first()
         return v.capacidad
 
+    def actualizarCap(self,v):
+        v.capacidad = v.capacidad-1
+        self.session.commit()
+
 class CapaDatosCliente():
 
     def __init__(self):

@@ -52,13 +52,13 @@ class CUCliente():
        self.tree.grid(row=1,column=1,columnspan=6,rowspan = 1,sticky=(N, S, E, W))
 
        botonA = Button(self.ventana, text=" Alta  ", command=lambda: self.alta(),background="#ADF5A9",cursor="hand2")
-       botonA.grid(row=5,column=1,columnspan=2,sticky=(N, S, E, W))
+       botonA.grid(row=5,column=2,columnspan=1,sticky=(N, S, E, W))
 
        botonB = Button(self.ventana,text="Baja", command= lambda: self.baja(),background="#F5A9A9",cursor="hand2")
-       botonB.grid(row=5,column=3,columnspan=2,sticky=(N, S, E, W))
+       botonB.grid(row=5,column=2,columnspan=1,sticky=(N, S, E, W))
 
        botonM = Button(self.ventana,text="  Modificacion  ", command=lambda: self.modificar(),background="#7EB0EA",cursor="hand2")
-       botonM.grid(row=5,column=5, columnspan=2,sticky=(N, S, E, W))
+       botonM.grid(row=5,column=2, columnspan=1,sticky=(N, S, E, W))
 
        """botonAct = Button(self.ventana,text="  Refrescar  ", command=lambda: self.refresh())
        botonAct.grid(row=5,column=4,sticky=(N, S, E, W))"""

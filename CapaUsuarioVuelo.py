@@ -17,9 +17,9 @@ class CUVuelo():
        vp.grid(column=0, row=0,  sticky=(N, S, E, W))
 
        self.tree["columns"]=("dia_hora_salida","dia_hora_llegada","aerolinea","destino","capacidad","precio")
-       self.tree.column("#0", width=50)
-       self.tree.column("dia_hora_salida", width=150)
-       self.tree.column("dia_hora_llegada", width=150)
+       self.tree.column("#0", width=100)
+       self.tree.column("dia_hora_salida", width=130)
+       self.tree.column("dia_hora_llegada", width=130)
        self.tree.column("aerolinea", width=100)
        self.tree.column("destino", width=100)
        self.tree.column("capacidad", width=100)
@@ -40,7 +40,7 @@ class CUVuelo():
        #Configuracion de la ventana:
        self.ventana.title("ABM Vuelos")
        self.ventana.resizable
-       self.ventana.geometry('800x400')
+       self.ventana.geometry('760x400')
        self.ventana.columnconfigure(0,weight=0)
        self.ventana.columnconfigure(1,weight=1)
        self.ventana.columnconfigure(2,weight=1)

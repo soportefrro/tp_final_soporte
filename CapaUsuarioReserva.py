@@ -42,16 +42,16 @@ class CUReserva():
        self.ventana.columnconfigure(1,weight=1)
        self.ventana.columnconfigure(2,weight=1)
        self.ventana.columnconfigure(3,weight=1)
-       self.ventana.columnconfigure(4,weight=1)
+       self.ventana.columnconfigure(4,weight=0)
        self.ventana.rowconfigure(1,weight=1)
 
        self.tree.grid(row=1,column=1,columnspan=3,rowspan = 1,sticky=(N, S, E, W))
 
        botonA = Button(self.ventana, text=" Alta  ", command=lambda: self.alta(),background="#ADF5A9",cursor="hand2")
-       botonA.grid(row=5,column=1,sticky=(N, S, E, W))
+       botonA.grid(row=5,column=1,columnspan=1,sticky=(N, S, E, W))
 
        botonB = Button(self.ventana,text="  Baja  ", command= lambda: self.baja(),background="#F5A9A9",cursor="hand2")
-       botonB.grid(row=5,column=2,columnspan=1,sticky=(N, S, E, W))
+       botonB.grid(row=5,column=3,columnspan=1,sticky=(N, S, E, W))
 
        self.ventana.mainloop()
 

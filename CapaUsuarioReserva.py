@@ -78,9 +78,6 @@ class CUReserva():
        botoncerrar.grid(column=1, row=2)
        self.refresh()
 
-
-
-
    def alta(self):
        self.cnv = CNVuelo()
 
@@ -221,27 +218,27 @@ class CUReserva():
 
        etiquetanombre=Label(vp, text= "Nro Vuelo")
        etiquetanombre.grid(column=0, row=6)
-       entradanombre=Entry(vp, width= 20, textvariable= self.vuelo_nro_vuelo)
+       entradanombre=Entry(vp, width= 20, textvariable= self.vuelo_nro_vuelo, state='disabled')
        entradanombre.grid(column=1, row=6)
 
        etiquetaapellido=Label(vp, text= "Salida")
        etiquetaapellido.grid(column=0, row=7)
-       entradaapellido=Entry(vp, width= 20, textvariable= self.vuelo_dia_hora_salida)
+       entradaapellido=Entry(vp, width= 20, textvariable= self.vuelo_dia_hora_salida, state='disabled')
        entradaapellido.grid(column=1, row=7)
 
        etiquetadni=Label(vp, text= "DNI")
        etiquetadni.grid(column=0, row=8)
-       entradadni=Entry(vp, width= 20, textvariable= self.cliente_dni)
+       entradadni=Entry(vp, width= 20, textvariable= self.cliente_dni, state='disabled')
        entradadni.grid(column=1, row=8)
 
        etiquetadni=Label(vp, text= "Apellido")
        etiquetadni.grid(column=0, row=9)
-       entradadni=Entry(vp, width= 20, textvariable= self.cliente_apellido)
+       entradadni=Entry(vp, width= 20, textvariable= self.cliente_apellido, state='disabled')
        entradadni.grid(column=1, row=9)
 
        etiquetadni=Label(vp, text= "Nombre")
        etiquetadni.grid(column=0, row=10)
-       entradadni=Entry(vp, width= 20, textvariable= self.cliente_nombre)
+       entradadni=Entry(vp, width= 20, textvariable= self.cliente_nombre, state='disabled')
        entradadni.grid(column=1, row=10)
 
        etiquetadni=Label(vp, text= "fecha_reserva")
@@ -251,7 +248,7 @@ class CUReserva():
 
        etiquetadni=Label(vp, text= "precio")
        etiquetadni.grid(column=0, row=12)
-       entradadni=Entry(vp, width= 20, textvariable= self.precio)
+       entradadni=Entry(vp, width= 20, textvariable= self.precio, state='disabled')
        entradadni.grid(column=1, row=12)
 
 

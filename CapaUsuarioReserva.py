@@ -1,5 +1,6 @@
 from CapaNegocioReserva import CNReserva
 from CapaNegocioVuelo import CNVuelo
+from CapaNegocioSocio import CNCliente
 from tkinter import *
 from tkinter import ttk
 from CapaDatosAlchemy import Reserva
@@ -81,8 +82,6 @@ class CUReserva():
 
 
    def alta(self):
-
-
        self.cnv = CNVuelo()
 
        self.ventana2 = Tk()
@@ -91,10 +90,8 @@ class CUReserva():
        vp2=Frame(self.ventana2)
        vp2.grid(column=0, row=0,  sticky=(N, S, E, W))
 
-       self.ventana2.title("Formulario nueva reserva")
-
        self.tree2["columns"]=("dia_hora_salida","dia_hora_llegada","aerolinea","destino","capacidad","precio")
-       self.tree2.column("#0", width=50)
+       self.tree2.column("#0", width=75)
        self.tree2.column("dia_hora_salida", width=150)
        self.tree2.column("dia_hora_llegada", width=150)
        self.tree2.column("aerolinea", width=100)
@@ -114,9 +111,9 @@ class CUReserva():
        for i in range(len(lista)):
               self.tree2.insert("", lista[i].nro_vuelo,text=lista[i].nro_vuelo, values=(lista[i].dia_hora_salida,lista[i].dia_hora_llegada,lista[i].aerolinea,lista[i].destino,lista[i].capacidad,lista[i].precio))
 
-       self.ventana2.title("ABM Vuelos")
+       self.ventana2.title("Lista de vuelos")
        self.ventana2.resizable
-       self.ventana2.geometry('650x400')
+       self.ventana2.geometry('800x400')
        self.ventana2.columnconfigure(0,weight=0)
        self.ventana2.columnconfigure(1,weight=1)
        self.ventana2.columnconfigure(2,weight=1)
@@ -124,18 +121,77 @@ class CUReserva():
        self.ventana2.columnconfigure(4,weight=1)
        self.ventana2.rowconfigure(1,weight=1)
 
-       etiquetaseleccionar=Label(vp2, text= "   Seleccione el Vuelo para el cual desea reservar")
+       etiquetaseleccionar=Label(vp2, text= "Seleccione el Vuelo para el cual desea reservar")
        etiquetaseleccionar.grid(column=0, row=0)
 
        self.tree2.grid(row=1,column=0,columnspan=3,rowspan = 1,sticky=(N, S, E, W))
 
-       botonA = Button(self.ventana2, text="Agregar", command=lambda: self.formuaAlta(),background="#ADF5A9")
+       botonA = Button(self.ventana2, text="Agregar", command=lambda: self.mapear(),background="#ADF5A9")
+       botonA.grid(row=5,column=1,sticky=(N, S, E, W))
+
+       self.ventana.mainloop()
+
+   def mapear(self):
+
+       posicion=self.tree2.selection()
+       var1=self.tree2.item(posicion,"text")
+       var2=self.tree2.item(posicion)['values'][0]
+       self.alta2(var1,var2)
+       print(var1,var2)
+
+   def alta2(self,var1,var2):
+       self.cn = CNCliente()
+       self.ventana2 = Tk()
+       self.tree2 = ttk.Treeview(self.ventana2)
+
+       vp2=Frame(self.ventana2)
+       vp2.grid(column=0, row=0,  sticky=(N, S, E, W))
+
+       self.tree2["columns"]=("nombre","apellido","mail","telefono","sexo")
+       self.tree2.column("#0", width=100)
+       self.tree2.column("nombre", width=100)
+       self.tree2.column("apellido", width=100)
+       self.tree2.column("mail", width=150)
+       self.tree2.column("telefono", width=100)
+       self.tree2.column("sexo", width=100)
+
+
+       self.tree2.heading("#0", text="DNI")
+       self.tree2.heading("nombre", text="Nombre")
+       self.tree2.heading("apellido", text="Apellido")
+       self.tree2.heading("mail", text="E-Mail")
+       self.tree2.heading("telefono", text="Telefono")
+       self.tree2.heading("sexo", text="Sexo (M/F)")
+
+       lista= self.cn.todos()
+       for i in range(len(lista)):
+              self.tree2.insert("", lista[i].dni,text=lista[i].dni, values=(lista[i].nombre,lista[i].apellido,lista[i].mail,lista[i].telefono,lista[i].sexo))
+
+       self.ventana2.title("Lista de clientes")
+       self.ventana2.resizable
+       self.ventana2.geometry('800x400')
+       self.ventana2.columnconfigure(0,weight=0)
+       self.ventana2.columnconfigure(1,weight=1)
+       self.ventana2.columnconfigure(2,weight=1)
+       self.ventana2.columnconfigure(3,weight=1)
+       self.ventana2.columnconfigure(4,weight=1)
+       self.ventana2.rowconfigure(1,weight=1)
+
+       etiquetaseleccionar=Label(vp2, text= "           Seleccione el Cliente que reserva")
+       etiquetaseleccionar.grid(column=0, row=0)
+
+       self.tree2.grid(row=1,column=0,columnspan=3,rowspan = 1,sticky=(N, S, E, W))
+
+       posicion=self.tree2.selection()
+       var3=self.tree2.item(posicion,"text")
+
+
+       botonA = Button(self.ventana2, text="Agregar", command=lambda: self.formuAlta(var1,var2,var3),background="#ADF5A9")
        botonA.grid(row=5,column=1,sticky=(N, S, E, W))
 
 
        self.ventana.mainloop()
-
-   def formuaAlta(self):
+   def formuAlta(self,var1,var2,var3):
        tl=Toplevel()
        self.ventana.title("Formulario nueva Reserva")
 
@@ -145,22 +201,26 @@ class CUReserva():
        self.vuelo_nro_vuelo=IntVar()
        self.vuelo_dia_hora_salida= StringVar()
        self.cliente_dni=StringVar()
+       self.cliente_nombre=StringVar()
+       self.cliente_apellido=StringVar()
        self.fecha_reserva= StringVar()
        self.precio =IntVar()
 
        posicion=self.tree2.selection()
        var1=self.tree2.item(posicion,"text")
        var2=self.tree2.item(posicion) ['values'][0]
-
-       v = self.cnr.buscar(var1,var2)
+       print (var1,var2,var3)
+       v = self.cnv.buscar(var1,var2)
        self.vuelo_nro_vuelo.set(var1)
        self.vuelo_dia_hora_salida.set(var2)
-       self.precio.set(v.precio)
+       #self.precio.set(v.precio)
 
+       c= self.cn.buscaxDni(var3)
+       self.cliente_dni.set(var3)
+       #self.cliente_nombre.set(c.nombre)
+       #self.cliente_apellido.set(c.apellido)
 
-
-
-       botonagrega = Button(tl, text="Agregar",command=lambda: self.confirmaAlta())
+       botonagrega = Button(tl, text="Agregar",command=lambda: self.formuAlta2(var1,var2,var3))
        botonagrega.grid(column=2, row=3)
 
        etiquetanombre=Label(vp, text= "Nro Vuelo")
@@ -178,15 +238,26 @@ class CUReserva():
        entradadni=Entry(vp, width= 20, textvariable= self.cliente_dni)
        entradadni.grid(column=1, row=8)
 
-       etiquetadni=Label(vp, text= "fecha_reserva")
+       etiquetadni=Label(vp, text= "Apellido")
        etiquetadni.grid(column=0, row=9)
-       entradadni=Entry(vp, width= 20, textvariable= self.fecha_reserva)
+       entradadni=Entry(vp, width= 20, textvariable= self.cliente_apellido)
        entradadni.grid(column=1, row=9)
 
-       etiquetadni=Label(vp, text= "precio")
+       etiquetadni=Label(vp, text= "Nombre")
        etiquetadni.grid(column=0, row=10)
-       entradadni=Entry(vp, width= 20, textvariable= self.precio)
+       entradadni=Entry(vp, width= 20, textvariable= self.cliente_nombre)
        entradadni.grid(column=1, row=10)
+
+       etiquetadni=Label(vp, text= "fecha_reserva")
+       etiquetadni.grid(column=0, row=11)
+       entradadni=Entry(vp, width= 20, textvariable= self.fecha_reserva)
+       entradadni.grid(column=1, row=11)
+
+       etiquetadni=Label(vp, text= "precio")
+       etiquetadni.grid(column=0, row=12)
+       entradadni=Entry(vp, width= 20, textvariable= self.precio)
+       entradadni.grid(column=1, row=12)
+
 
    def baja(self):
        posicion=self.tree.selection()

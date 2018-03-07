@@ -197,7 +197,7 @@ class CUVuelo():
 
        posicion=self.tree.selection()
        var1=self.tree.item(posicion,"text")
-       var2=self.tree.item(posicion) ['values'][0]
+       var2=self.tree.item(posicion)['values'][0]
 
        v = self.cnv.buscar(var1,var2)
        self.nro_vuelo.set(var1)
@@ -244,7 +244,7 @@ class CUVuelo():
 
        etiquetadni=Label(vp, text= "precio")
        etiquetadni.grid(column=0, row=6)
-       entradadni=Entry(vp, width= 20, textvariable= self.capacidad)
+       entradadni=Entry(vp, width= 20, textvariable= self.precio)
        entradadni.grid(column=1, row=6)
 
    def refresh(self):

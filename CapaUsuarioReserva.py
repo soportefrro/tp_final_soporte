@@ -278,7 +278,7 @@ class CUReserva():
        reserva = Reserva(vuelo_nro_vuelo= a, vuelo_dia_hora_salida= b, cliente_dni= c,fecha_reserva =d)
        if self.cnr.altareserva(reserva):
            tl=Toplevel()
-           tl.title("Reserva agregado")
+           tl.title("Reserva agregada")
            vp=Frame(tl)
            vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
            etique=Label(vp, text="La reserva ha sido agregada")
@@ -291,7 +291,7 @@ class CUReserva():
            tl.title("ERROR")
            vp=Frame(tl)
            vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
-           etique=Label(vp, text="Operación fallida")
+           etique=Label(vp, text="Operación fallida. No queda lugar disponible en el vuelo seleccionado")
            etique.grid(column=1, row=1)
            botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
            botoncerrar.grid(column=1, row=2)

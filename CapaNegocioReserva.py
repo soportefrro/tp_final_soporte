@@ -1,12 +1,17 @@
 from CapaDatosAlchemy import CapaDatosReserva
+from CapaDatosAlchemy import CapaDatosVuelo
 
 class CNReserva():
     def __init__(self):
         self.cdr=CapaDatosReserva()
+        self.cdv =CapaDatosVuelo()
+
 
     def altareserva(self, r):
-        self.cdr.altaReserva(r)
-        return True
+        if self.obtenercapacidad(r.vuelo_nro_vuelo,r.vuelo_dia_hora_salida) <= self.obtenercapacidavuelo(r.vuelo_nro_vuelo,r.vuelo_dia_hora_salida):
+            self.cdr.altaReserva(r)
+            return True
+        else: return False
 
     def todosreserva(self):
         return self.cdr.mostrarReservas()
@@ -37,3 +42,5 @@ class CNReserva():
     def obtenercapacidad(self, nro_vuelo, dia_hora_salida):
         return self.cdr.obtenercapacidad(nro_vuelo, dia_hora_salida)
 
+    def obtenercapacidavuelo(self, nro_vuelo, dia_hora_salida):
+        return self.cdv.obtenercapacidadvuelo(nro_vuelo,dia_hora_salida)

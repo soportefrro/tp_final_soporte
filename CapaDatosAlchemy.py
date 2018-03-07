@@ -122,6 +122,9 @@ class CapaDatosVuelo():
         vuelo.precio=v.precio
         self.session.commit()
 
+    def obtenercapacidadvuelo(self,nro_vuelo, dia_hora_salida):
+        v = self.session.query(Vuelo).filter(Vuelo.dia_hora_salida==dia_hora_salida and Vuelo.nro_vuelo==nro_vuelo).first()
+        return v.capacidad
 
 class CapaDatosCliente():
 

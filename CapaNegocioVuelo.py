@@ -4,6 +4,10 @@ class CNVuelo():
     def __init__(self):
         self.cdv=CapaDatosVuelo()
 
+    def actualizaCap(self,a,b):
+        v=self.cdv.buscarVuelo(a,b)
+        self.cdv.actualizarCap(v)
+
     def altavuelo(self, v):
         if v.nro_vuelo!='' and v.dia_hora_salida!='' and v.dia_hora_llegada!='' and v.aerolinea!='' and v.destino!='' and v.capacidad!='' and v.precio!='':
             if int(v.capacidad)>0 and int(v.nro_vuelo) and (v.precio)>0:

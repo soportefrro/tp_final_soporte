@@ -151,8 +151,8 @@ class CUListado():
 
         lista= self.cnv.todosvuelo()
         for i in range(len(lista)):
-                   self.capacidad = self.cnr.obtenercapacidad(lista[i].nro_vuelo, lista[i].dia_hora_salida)
-                   self.disponible= (lista[i].capacidad - self.capacidad)
+                   self.cantReservas = self.cnr.obtenercapacidad(lista[i].nro_vuelo, lista[i].dia_hora_salida) #Tengo cantidad de reservas para ese vuelo
+                   self.disponible= (lista[i].capacidad - self.cantReservas)
                    self.tree2.insert("", lista[i].nro_vuelo,text=lista[i].nro_vuelo, values=(lista[i].dia_hora_salida,self.disponible))
 
         self.ventana2.title("Capacidad disponible por vuelo")

@@ -53,9 +53,6 @@ class CUReserva():
        botonB = Button(self.ventana,text="  Baja  ", command= lambda: self.baja(),background="#F5A9A9",cursor="hand2")
        botonB.grid(row=5,column=2,columnspan=1,sticky=(N, S, E, W))
 
-       botonM = Button(self.ventana,text="  Modificacion  ", command=lambda: self.modificar(),background="#7EB0EA",cursor="hand2")
-       botonM.grid(row=5,column=3,sticky=(N, S, E, W))
-
        self.ventana.mainloop()
 
    def confirmaAlta(self):
@@ -255,8 +252,11 @@ class CUReserva():
    def baja(self):
        posicion=self.tree.selection()
        var1=self.tree.item(posicion,"text")
-       v = self.cnr.buscar(var1)  #Quiero mandarle dos parametros
-       self.cnr.borrar_reserva(v)
+       var2=self.tree.item(posicion) ['values'][0]
+       var3=self.tree.item(posicion) ['values'][1]
+
+       r = self.cnr.buscar(var1,var2,var3)
+       self.cnr.borrar_reserva(r.vuelo_nro_vuelo,r.vuelo_dia_hora_salida,r.cliente_dni)
 
        tl=Toplevel()
        tl.title("Reserva borrada")
@@ -297,81 +297,9 @@ class CUReserva():
            botoncerrar.grid(column=1, row=2)
            self.refresh()
 
-   def confirmaModificar(self,var1):
-
-       c=self.destino.get()
-       d=self.fecha.get()
-       e=self.precio.get()
-
-       r = Reserva(id_reserva= var1, destino= c,fecha=d,precio=e)
-
-       if self.cnr.modificar(r):
-           # ventana de confirmación
-           tl=Toplevel()
-           tl.title("Reserva modificada")
-           vp=Frame(tl)
-           vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
-           etique=Label(vp, text="La reserva ha sido modificada con éxito")
-           etique.grid(column=1, row=1)
-           botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
-           botoncerrar.grid(column=1, row=2)
-           self.refresh()
-       else:
-            # ventana de error
-           tl=Toplevel()
-           tl.title("ERROR")
-           vp=Frame(tl)
-           vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
-           etique=Label(vp, text="Operación fallida. Existen campos vacios o iguales a 0\n")
-           etique.grid(column=1, row=1)
-           botoncerrar=Button(vp, text="Aceptar", command=tl.destroy)
-           botoncerrar.grid(column=1, row=2)
-           self.refresh()
-
-   def modificar(self):
-       tl=Toplevel()
-       self.ventana.title("Formulario modificar reserva")
-
-       vp=Frame(tl)
-       vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
-
-       self.id_reserva=IntVar()
-       self.destino= StringVar()
-       self.fecha=StringVar()
-       self.precio= StringVar()
-
-       posicion=self.tree.selection()
-       var1=self.tree.item(posicion,"text")
-
-       v = self.cnr.buscar(var1)
-       self.id_reserva.set(var1)
-       self.destino.set(v.destino)
-       self.fecha.set(v.fecha)
-       self.precio.set(v.precio)
-
-       botonmodifica = Button(tl, text="Modificar",command=lambda: self.confirmaModificar(var1))
-       botonmodifica.grid(column=2, row=3)
 
 
-       etiquetanombre=Label(vp, text= "ID Reserva")
-       etiquetanombre.grid(column=0, row=0)
-       entradanombre=Entry(vp, width= 20, textvariable= self.id_reserva)
-       entradanombre.grid(column=1, row=0)
 
-       etiquetaapellido=Label(vp, text= "Destino")
-       etiquetaapellido.grid(column=0, row=1)
-       entradaapellido=Entry(vp, width= 20, textvariable= self.destino)
-       entradaapellido.grid(column=1, row=1)
-
-       etiquetadni=Label(vp, text= "Fecha")
-       etiquetadni.grid(column=0, row=2)
-       entradadni=Entry(vp, width= 20, textvariable= self.fecha)
-       entradadni.grid(column=1, row=2)
-
-       etiquetadni=Label(vp, text= "Precio")
-       etiquetadni.grid(column=0, row=3)
-       entradadni=Entry(vp, width= 20, textvariable= self.precio)
-       entradadni.grid(column=1, row=3)
 
 
    def refresh(self):

@@ -66,7 +66,7 @@ class CapaDatosReserva():
         return self.session.query(Reserva).all()
 
     def bajaReserva(self, nro_vuelo,dia_hora_salida,dni):
-        self.session.query(Reserva).filter(Reserva.cliente_dni == dni and Reserva.vuelo_dia_hora_salida ==dia_hora_salida and Reserva.vuelo_nro_vuelo==nro_vuelo).delete()
+        self.session.query(Reserva).filter(Reserva.vuelo_dia_hora_salida ==dia_hora_salida  and Reserva.vuelo_nro_vuelo==nro_vuelo and Reserva.cliente_dni == dni).delete()
         self.session.commit()
 
     def buscarReserva(self, nro_vuelo,dia_hora_salida,dni):
@@ -98,8 +98,9 @@ class CapaDatosVuelo():
         return self.session.query(Vuelo).all()
 
     def bajaVuelo(self, nro_vuelo, dia_hora_salida):
-        self.session.query(Vuelo).filter(Vuelo.nro_vuelo==nro_vuelo and Vuelo.dia_hora_salida==dia_hora_salida).delete()
+        self.session.query(Vuelo).filter((Vuelo.dia_hora_salida==dia_hora_salida) and (Vuelo.nro_vuelo==nro_vuelo)).delete()
         self.session.commit()
+
 
     def buscarVuelo (self,nro_vuelo, dia_hora_salida):
         return self.session.query(Vuelo).filter(Vuelo.nro_vuelo==nro_vuelo and Vuelo.dia_hora_salida==dia_hora_salida).first()

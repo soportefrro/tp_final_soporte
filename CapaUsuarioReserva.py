@@ -17,22 +17,21 @@ class CUReserva():
        vp=Frame(self.ventana)
        vp.grid(column=0, row=0,  sticky=(N, S, E, W))
 
-       self.tree["columns"]=("destino","fecha", "precio")
+       self.tree["columns"]=("vuelo_dia_hora_salida","cliente_dni","fecha_reserva")
        self.tree.column("#0", width=50)
-       self.tree.column("destino", width=150)
-       self.tree.column("fecha", width=150)
-       self.tree.column("precio", width=150)
+       self.tree.column("vuelo_dia_hora_salida", width=100)
+       self.tree.column("cliente_dni", width=100)
+       self.tree.column("fecha_reserva", width=100)
 
 
-       self.tree.heading("#0", text="ID Reserva")
-       self.tree.heading("destino", text="Destino")
-       self.tree.heading("fecha", text="Fecha Reserva")
-       self.tree.heading("precio", text="Precio")
-
+       self.tree.heading("#0", text="Nro Vuelo")
+       self.tree.heading("vuelo_dia_hora_salida", text="Salida")
+       self.tree.heading("cliente_dni", text="DNI Cliente")
+       self.tree.heading("fecha_reserva", text="Fecha Reserva")
 
        lista= self.cnr.todosreserva()
        for i in range(len(lista)):
-              self.tree.insert("", lista[i].id_reserva,text=lista[i].id_reserva, values=(lista[i].destino,lista[i].fecha,lista[i].precio))
+              self.tree.insert("", lista[i].vuelo_nro_vuelo,text=lista[i].vuelo_nro_vuelo, values=(lista[i].vuelo_dia_hora_salida,lista[i].cliente_dni,lista[i].fecha_reserva))
 
        #Configuracion de la ventana:
        self.ventana.title("ABM Reservas")
@@ -59,13 +58,13 @@ class CUReserva():
        self.ventana.mainloop()
 
    def confirmaAlta(self):
-       a=self.id_reserva.get()
-       b=self.destino.get()
-       c=self.fecha.get()
-       d=self.precio.get()
+       a=self.vuelo_nro_vuelo.get()
+       b=self.vuelo_dia_hora_salida.get()
+       c=self.cliente_dni.get()
+       d=self.fecha_reserva.get()
 
 
-       reserva = Reserva(id_reserva= a, destino= b, fecha= c,precio =d)
+       reserva = Reserva(vuelo_nro_vuelo= a, vuelo_dia_hora_salida= b, cliente_dni= c,fecha_reserva =d)
        self.cnr.altareserva(reserva)
 
        tl=Toplevel()
@@ -94,13 +93,14 @@ class CUReserva():
 
        self.ventana2.title("Formulario nueva reserva")
 
-       self.tree2["columns"]=("dia_hora_salida","dia_hora_llegada","aerolinea","destino","capacidad")
+       self.tree2["columns"]=("dia_hora_salida","dia_hora_llegada","aerolinea","destino","capacidad","precio")
        self.tree2.column("#0", width=50)
        self.tree2.column("dia_hora_salida", width=150)
        self.tree2.column("dia_hora_llegada", width=150)
        self.tree2.column("aerolinea", width=100)
        self.tree2.column("destino", width=100)
        self.tree2.column("capacidad", width=100)
+       self.tree2.column("precio",width=100)
 
        self.tree2.heading("#0", text="Nro vuelo")
        self.tree2.heading("dia_hora_salida", text="Salida")
@@ -108,10 +108,11 @@ class CUReserva():
        self.tree2.heading("aerolinea", text="Aerolinea")
        self.tree2.heading("destino", text="Destino")
        self.tree2.heading("capacidad", text="Capacidad")
+       self.tree2.heading("precio", text="Precio")
 
        lista= self.cnv.todosvuelo()
        for i in range(len(lista)):
-              self.tree2.insert("", lista[i].nro_vuelo,text=lista[i].nro_vuelo, values=(lista[i].dia_hora_salida,lista[i].dia_hora_llegada,lista[i].aerolinea,lista[i].destino,lista[i].capacidad))
+              self.tree2.insert("", lista[i].nro_vuelo,text=lista[i].nro_vuelo, values=(lista[i].dia_hora_salida,lista[i].dia_hora_llegada,lista[i].aerolinea,lista[i].destino,lista[i].capacidad,lista[i].precio))
 
        self.ventana2.title("ABM Vuelos")
        self.ventana2.resizable
@@ -136,38 +137,56 @@ class CUReserva():
 
    def formuaAlta(self):
        tl=Toplevel()
-       self.ventana.title("Formulario nueva Ruelo")
+       self.ventana.title("Formulario nueva Reserva")
 
        vp=Frame(tl)
        vp.grid(column=0, row=0, padx=(100,100), pady=(20,20), sticky=(N, S, E, W))
 
-       self.id_reserva=IntVar()
-       self.destino= StringVar()
-       self.fecha=StringVar()
-       self.precio= StringVar()
+       self.vuelo_nro_vuelo=IntVar()
+       self.vuelo_dia_hora_salida= StringVar()
+       self.cliente_dni=StringVar()
+       self.fecha_reserva= StringVar()
+       self.precio =IntVar()
+
+       posicion=self.tree2.selection()
+       var1=self.tree2.item(posicion,"text")
+       var2=self.tree2.item(posicion) ['values'][0]
+
+       v = self.cnr.buscar(var1,var2)
+       self.vuelo_nro_vuelo.set(var1)
+       self.vuelo_dia_hora_salida.set(var2)
+       self.precio.set(v.precio)
+
+
+
 
        botonagrega = Button(tl, text="Agregar",command=lambda: self.confirmaAlta())
        botonagrega.grid(column=2, row=3)
 
-       etiquetanombre=Label(vp, text= "ID reserva")
+       etiquetanombre=Label(vp, text= "Nro Vuelo")
        etiquetanombre.grid(column=0, row=6)
-       entradanombre=Entry(vp, width= 20, textvariable= self.id_reserva)
+       entradanombre=Entry(vp, width= 20, textvariable= self.vuelo_nro_vuelo)
        entradanombre.grid(column=1, row=6)
 
-       etiquetaapellido=Label(vp, text= "Destino")
+       etiquetaapellido=Label(vp, text= "Salida")
        etiquetaapellido.grid(column=0, row=7)
-       entradaapellido=Entry(vp, width= 20, textvariable= self.destino)
+       entradaapellido=Entry(vp, width= 20, textvariable= self.vuelo_dia_hora_salida)
        entradaapellido.grid(column=1, row=7)
 
-       etiquetadni=Label(vp, text= "Fecha")
+       etiquetadni=Label(vp, text= "DNI")
        etiquetadni.grid(column=0, row=8)
-       entradadni=Entry(vp, width= 20, textvariable= self.fecha)
+       entradadni=Entry(vp, width= 20, textvariable= self.cliente_dni)
        entradadni.grid(column=1, row=8)
 
-       etiquetadni=Label(vp, text= "Precio")
+       etiquetadni=Label(vp, text= "fecha_reserva")
        etiquetadni.grid(column=0, row=9)
-       entradadni=Entry(vp, width= 20, textvariable= self.precio)
+       entradadni=Entry(vp, width= 20, textvariable= self.fecha_reserva)
        entradadni.grid(column=1, row=9)
+
+       etiquetadni=Label(vp, text= "precio")
+       etiquetadni.grid(column=0, row=10)
+       entradadni=Entry(vp, width= 20, textvariable= self.precio)
+       entradadni.grid(column=1, row=10)
 
    def baja(self):
        posicion=self.tree.selection()

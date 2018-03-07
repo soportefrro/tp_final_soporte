@@ -137,7 +137,7 @@ class CUReserva():
        var1=self.tree2.item(posicion,"text")
        var2=self.tree2.item(posicion)['values'][0]
        self.alta2(var1,var2)
-       print(var1,var2)
+
 
    def alta2(self,var1,var2):
        self.cn = CNCliente()
@@ -182,16 +182,13 @@ class CUReserva():
 
        self.tree2.grid(row=1,column=0,columnspan=3,rowspan = 1,sticky=(N, S, E, W))
 
-       posicion=self.tree2.selection()
-       var3=self.tree2.item(posicion,"text")
 
-
-       botonA = Button(self.ventana2, text="Agregar", command=lambda: self.formuAlta(var1,var2,var3),background="#ADF5A9")
+       botonA = Button(self.ventana2, text="Agregar", command=lambda: self.formuAlta(var1,var2),background="#ADF5A9")
        botonA.grid(row=5,column=1,sticky=(N, S, E, W))
 
 
        self.ventana.mainloop()
-   def formuAlta(self,var1,var2,var3):
+   def formuAlta(self,var1,var2):
        tl=Toplevel()
        self.ventana.title("Formulario nueva Reserva")
 
@@ -207,18 +204,20 @@ class CUReserva():
        self.precio =IntVar()
 
        posicion=self.tree2.selection()
-       var1=self.tree2.item(posicion,"text")
-       var2=self.tree2.item(posicion) ['values'][0]
-       print (var1,var2,var3)
+       var3=self.tree2.item(posicion,"text")
+
+
+       print(var1,var2,var3)
+
        v = self.cnv.buscar(var1,var2)
        self.vuelo_nro_vuelo.set(var1)
        self.vuelo_dia_hora_salida.set(var2)
-       #self.precio.set(v.precio)
+       self.precio.set(v.precio)
 
        c= self.cn.buscaxDni(var3)
        self.cliente_dni.set(var3)
-       #self.cliente_nombre.set(c.nombre)
-       #self.cliente_apellido.set(c.apellido)
+       self.cliente_nombre.set(c.nombre)
+       self.cliente_apellido.set(c.apellido)
 
        botonagrega = Button(tl, text="Agregar",command=lambda: self.formuAlta2(var1,var2,var3))
        botonagrega.grid(column=2, row=3)
